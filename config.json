@@ -1,6 +1,6 @@
 {
-    "authority": "https://login.microsoftonline.com/organizations",
+    "authority": "https://login.microsoftonline.com/3b79fa1e-9be3-41fe-a8f5-131df5978f73",
     "client_id": "3b0c33ac-93c9-4f6e-bc70-d508465155a0",
-    "scopes": ["user.read"],
+    "scopes": [".default"],
     "client_secret": "eKt8Q~VPPnvdvfj74onsTERTMNJjyb0fGJzO1a8q"
 }
