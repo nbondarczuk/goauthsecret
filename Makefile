@@ -1,7 +1,7 @@
 TARGET = goauthsecret
 
 build:
-	go build -o $(TARGET) *.go
+	go build -o $(TARGET) cmd/$(TARGET).go
 
 clean:
 	go clean
