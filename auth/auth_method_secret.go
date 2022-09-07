@@ -6,8 +6,8 @@ import (
 	"github.com/AzureAD/microsoft-authentication-library-for-go/apps/confidential"
 )
 
-// AuthMethodSecret is a container for Claims and Permits obtained
-type AuthMethodSecret struct {
+// MethodSecret is a container for Claims and Permits obtained
+type MethodSecret struct {
 	Claim
 	Permit
 }
@@ -35,17 +35,17 @@ func acquireTokenClientSecret(clm Claim) (string, error) {
 	return result.AccessToken, nil
 }
 
-// NewAuthMethodSecret creates new object with original claim and a permit
-func NewAuthMethodSecret(clm Claim) (AuthMethodSecret, error) {
+// NewMethodSecret creates new object with original claim and a permit
+func NewMethodSecret(clm Claim) (MethodSecret, error) {
 	token, err := acquireTokenClientSecret(clm)
 	if err != nil {
-		return AuthMethodSecret{Claim{}, Permit{}}, err
+		return MethodSecret{Claim{}, Permit{}}, err
 	}
 
-	return AuthMethodSecret{clm, Permit{token}}, nil
+	return MethodSecret{clm, Permit{token}}, nil
 }
 
 // Token gives out the permit artefact
-func (m AuthMethodSecret) Token() string {
+func (m MethodSecret) Token() string {
 	return m.Permit.token
 }

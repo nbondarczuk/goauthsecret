@@ -8,7 +8,7 @@ import (
 	"goauthsecret/cache"
 )
 
-// Method is a generic container producing token
+// AuthMethod is a generic container producing token
 type Method interface {
 	Token() string
 }
@@ -39,13 +39,13 @@ var (
 	cacheAccessor = &cache.TokenCache{"cache.json"}
 )
 
-// NeMethod is a factory producing Permits using Claims provided
+// NewMethod is a factory producing Permits using Claims provided
 func NewMethod(method string, clm Claim) (Method, error) {
 	switch method {
 	case "secret":
-		return NewAuthMethodSecret(clm)
+		return NewMethodSecret(clm)
 	case "certificate":
-		return NewAuthMethodCertificate(clm)
+		return NewMethodCertificate(clm)
 	}
 
 	return nil, fmt.Errorf("Invalid method requested: %s", method)
