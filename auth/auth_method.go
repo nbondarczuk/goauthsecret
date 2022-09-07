@@ -1,15 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-package config
+package auth
 
 import (
-	"encoding/json"
-	"os"
+	"fmt"
+	"goauthsecret/cache"
 )
 
-// Config represents the config.json required to run the samples
-type Config struct {
+type Method interface {
+	Token() string
+}
+
+type Permit struct {
+	token string
+}
+
+type Claim struct {
 	ClientID            string   `json:"client_id"`
 	Authority           string   `json:"authority"`
 	Scopes              []string `json:"scopes"`
@@ -24,18 +31,17 @@ type Config struct {
 	PemData             string   `json:"pem_file"`
 }
 
-// CreateConfig creates the Config struct from a json file.
-func NewConfig(fileName string) (*Config, error) {
-	data, err := os.ReadFile(fileName)
-	if err != nil {
-		return nil, err
+var (
+	cacheAccessor = &cache.TokenCache{"cache.json"}
+)
+
+func NewMethod(method string, clm Claim) (Method, error) {
+	switch method {
+	case "secret":
+		return NewAuthMethodSecret(clm)
+	case "certificate":
+		return NewAuthMethodCertificate(clm)
 	}
 
-	cnf := &Config{}
-	err = json.Unmarshal(data, cnf)
-	if err != nil {
-		return nil, err
-	}
-
-	return cnf, nil
+	return nil, fmt.Errorf("Invalid method requested: %s", method)
 }
