@@ -10,6 +10,7 @@ import (
 	"github.com/AzureAD/microsoft-authentication-library-for-go/apps/cache"
 )
 
+// TokenCache is a unitary set for LRU token
 type TokenCache struct {
 	File string
 }

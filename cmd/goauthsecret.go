@@ -13,10 +13,11 @@ func main() {
 		panic(err)
 	}
 
+	// Silently converting config to claim, ie. claim is loaded from config
 	mth, err := auth.NewMethod("secret", auth.Claim(*cnf))
 	if err != nil {
 		panic(err)
 	}
 
-	log.Printf("Token: %s", mth.Token())
+	log.Printf("Token: %+v -> %s", *cnf, mth.Token())
 }
